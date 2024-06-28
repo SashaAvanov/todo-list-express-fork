@@ -1,6 +1,6 @@
 const deleteBtn = document.querySelectorAll('.fa-trash') //assigns all elements with trash can class to a variable
-const item = document.querySelectorAll('.item span') //assigns all span elements with item class to a variable
-const itemCompleted = document.querySelectorAll('.item span.completed') //assigns all span elements with 'item' and 'completed' classes to a variable
+const item = document.querySelectorAll('.item span') //assigns all span elements with parent that has 'item' class to a variable
+const itemCompleted = document.querySelectorAll('.item span.completed') //assigns all span elements with 'completed' class and parent that has 'item' class to a variable
 
 Array.from(deleteBtn).forEach((element)=>{
     element.addEventListener('click', deleteItem)
