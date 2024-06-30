@@ -14,22 +14,22 @@ Array.from(itemCompleted).forEach((element)=>{
     element.addEventListener('click', markUnComplete)
 }) //creates array from all html elements with 'completed' class and adds click event to each item
 
-async function deleteItem(){ //callback function for delete click event
+async function deleteItem(){ //asynchronous function for delete click event
     const itemText = this.parentNode.childNodes[1].innerText //sets text attached to delete icon to variable
-    try{
-        const response = await fetch('deleteItem', { //fetching a delete request
-            method: 'delete',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              'itemFromJS': itemText //sending above variable in body of request 
+    try{ //declaring try block
+        const response = await fetch('deleteItem', { //creates response variable that awaits on a fetch to retrieve data from deleteItem route
+            method: 'delete', //tells server to delete something
+            headers: {'Content-Type': 'application/json'}, //tells server to expect JSON object in request
+            body: JSON.stringify({ //declare message content being passed, stringify content
+              'itemFromJS': itemText //setting content of body to the variable declared above, naming it 'itemFromJS'
             })
           })
         const data = await response.json() //setting JSON response from delete request to a variable
-        console.log(data)
+        console.log(data) //log result to console
         location.reload() //refresh page
 
-    }catch(err){
-        console.log(err)
+    }catch(err){ //declaring catch block to display any errors thrown in try block
+        console.log(err) //log error to console
     }
 }
 

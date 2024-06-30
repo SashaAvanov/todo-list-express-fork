@@ -1,24 +1,24 @@
 const express = require('express') //require app to use express module
 const app = express() //set express function to variable "app"
-const MongoClient = require('mongodb').MongoClient //require app to use MongoDB module
-const PORT = 2121 //hard-coded default port
-require('dotenv').config() //require app to use dotenv module and set up environment variable
+const MongoClient = require('mongodb').MongoClient //assigns variable for methods associated with MongoClient and talking to our DB
+const PORT = 2121 //hard-coded default port where server will be listening
+require('dotenv').config() //allows us to look for variables inside the .env file
 
 
 let db, //database variable
     dbConnectionStr = process.env.DB_STRING, //database connection string variable
     dbName = 'todo' //set database name
 
-MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
-    .then(client => {
-        console.log(`Connected to ${dbName} Database`)
-        db = client.db(dbName)
-    }) //set up connection with MongoDB database
+MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true }) //creating connection to MongoDB using our connection string
+    .then(client => { //waiting for connection and proceeding if connection is successful
+        console.log(`Connected to ${dbName} Database`) //logging message for successful DB connection
+        db = client.db(dbName) //assigning value to previously declared variable, contains a DB client factory method
+    })
     
 app.set('view engine', 'ejs') //tells express the templating language is EJS
 app.use(express.static('public')) //handles routing for static pages like main.js and css
-app.use(express.urlencoded({ extended: true })) //tells server to recognize request as strings or arrays
-app.use(express.json()) //tells server to recognize request as a JSON object
+app.use(express.urlencoded({ extended: true })) //tells express to encode/decode URLs where header matches content, 'extended' allows for arrays and objects
+app.use(express.json()) //parses JSON content
 
 
 app.get('/',async (request, response)=>{ //Get/read request for main page
